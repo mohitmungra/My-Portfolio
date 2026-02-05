@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohit Mungra | Digital Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-circuit"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-text">MM</span>
+                <span class="logo-bracket">/&gt;</span>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="glitch-wrapper">
+                <h1 class="hero-title" data-text="MOHIT MUNGRA">MOHIT MUNGRA</h1>
+            </div>
+            <div class="hero-subtitle">
+                <span class="typing-text">Digital Engineer</span>
+                <span class="cursor">|</span>
+            </div>
+            <p class="hero-description">
+                Specializing in embedded systems, IoT platforms, and protocol-based testing
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Technologies</div>
+                </div>
+            </div>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View Work</a>
+            </div>
+        </div>
+        <div class="hero-terminal">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="term-btn red"></span>
+                    <span class="term-btn yellow"></span>
+                    <span class="term-btn green"></span>
+                </div>
+                <div class="terminal-title">system_info.sh</div>
+            </div>
+            <div class="terminal-body">
+                <p><span class="prompt">$</span> cat mohit_profile.json</p>
+                <p>{</p>
+                <p>  "name": "Mohit Mungra",</p>
+                <p>  "role": "Digital Engineer",</p>
+                <p>  "location": "Ahmedabad, Gujarat",</p>
+                <p>  "company": "MosChip Technologies",</p>
+                <p>  "expertise": ["IoT", "Embedded", "Automation", "CI/CD"],</p>
+                <p>  "status": <span class="status-active">"Employed"</span></p>
+                <p>}</p>
+                <p><span class="prompt">$</span> <span class="cursor-blink">_</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-number">01.</span> About Me
+            </h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-intro">
+                        Digital Engineer with 1 year of hands-on experience in automation testing
+                        and system-level validation across embedded, mobile, and backend systems.
+                    </p>
+                    <p>
+                        I specialize in protocol-based systems, EV charging solutions, Android and IoT applications, 
+                        and automation frameworks. My approach combines meticulous attention to detail with systematic 
+                        problem-solving to ensure robust system validation.
+                    </p>
+                    <p>
+                        Known for breaking down complex systems, identifying edge cases, and improving test coverage 
+                        through structured test cases and automation. Quick learner with strong fundamentals in 
+                        testing concepts, protocols, and scripting.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <div class="highlight-icon">⚡</div>
+                            <div class="highlight-text">End-to-end testing expertise</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">🔧</div>
+                            <div class="highlight-text">Automation framework development</div>
+                        </div>
+                        <div class="highlight-item">
+                            <div class="highlight-icon">📊</div>
+                            <div class="highlight-text">Log analysis & reporting</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-frame">
+                        <div class="frame-corner tl"></div>
+                        <div class="frame-corner tr"></div>
+                        <div class="frame-corner bl"></div>
+                        <div class="frame-corner br"></div>
+                        <div class="profile-placeholder">
+                            <img src="MM.jpeg" alt="My Photo" class="profile-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-number">02.</span> Technical Arsenal
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">🧪</span>
+                        QA & Automation Testing
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Pytest</span>
+                        <span class="skill-tag">Selenium</span>
+                        <span class="skill-tag">Appium</span>
+                        <span class="skill-tag">Protocol Testing</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">🌐</span>
+                        IoT & Protocols
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OCPP</span>
+                        <span class="skill-tag">MQTT</span>
+                        <span class="skill-tag">Modbus TCP/IP</span>
+                        <span class="skill-tag">OPC UA</span>
+                        <span class="skill-tag">SNMP</span>
+                        <span class="skill-tag">DNP3.0</span>
+                        <span class="skill-tag">Wi-Fi</span>
+                        <span class="skill-tag">BLE</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">⚙️</span>
+                        Embedded Systems
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ESP32</span>
+                        <span class="skill-tag">Raspberry Pi</span>
+                        <span class="skill-tag">CM4</span>
+                        <span class="skill-tag">I2C</span>
+                        <span class="skill-tag">SPI</span>
+                        <span class="skill-tag">UART</span>
+                        <span class="skill-tag">CAN</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">💻</span>
+                        Programming
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">React.js</span>
+                        <span class="skill-tag">Node.js</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">🛠️</span>
+                        Tools & Platforms
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitLab CI/CD</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Azure IoT</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <span class="category-icon">🖥️</span>
+                        Development
+                    </h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">WebSocket</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-number">03.</span> Professional Journey
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Dec 2024 - Present</div>
+                        <h3 class="timeline-title">Digital Engineer</h3>
+                        <h4 class="timeline-company">MosChip Technologies Limited</h4>
+                        <ul class="timeline-points">
+                            <li>Developing automation frameworks for Bluetooth and Wi-Fi validation</li>
+                            <li>Working with embedded systems (ESP32, Raspberry Pi) and IoT platforms</li>
+                            <li>Implementing test automation using Python, Pytest, Selenium, and Appium</li>
+                            <li>Protocol-based testing including OCPP, MQTT, and Modbus</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">May 2023 - Jun 2023</div>
+                        <h3 class="timeline-title">Frontend Developer (Intern)</h3>
+                        <h4 class="timeline-company">Miracle Technolabs</h4>
+                        <ul class="timeline-points">
+                            <li>Built responsive company website using React.js and JavaScript</li>
+                            <li>Strengthened frontend skills through real-world project implementation</li>
+                            <li>Followed industry-standard development practices</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2021 - 2025</div>
+                        <h3 class="timeline-title">Bachelor of Technology</h3>
+                        <h4 class="timeline-company">CHARUSAT University</h4>
+                        <ul class="timeline-points">
+                            <li>Information Technology | CGPA: 8.1</li>
+                            <li>SSIP 2nd Runner's Up - Student Startup Hackathon</li>
+                            <li>Training & Placement Representative</li>
+                            <li>Central Council Member & AWS Cloud Club</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-number">04.</span> Featured Projects
+            </h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">⚡</div>
+                        <h3 class="project-title">EV Charging Ecosystem</h3>
+                    </div>
+                    <p class="project-description">
+                        End-to-end testing of OCPP-based EV charging solution with web testbench UI for automated compliance validation.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Pytest</span>
+                        <span class="tech-badge">OCPP</span>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">WebSocket</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ OCPP protocol validation</div>
+                        <div class="feature">✓ Automated test execution dashboard</div>
+                        <div class="feature">✓ Transaction flow testing</div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">📡</div>
+                        <h3 class="project-title">BLE & Wi-Fi Automation Framework</h3>
+                    </div>
+                    <p class="project-description">
+                        Comprehensive automation framework for validating Bluetooth and Wi-Fi on ESP32 using Raspberry Pi as host controller.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">ESP32</span>
+                        <span class="tech-badge">Raspberry Pi</span>
+                        <span class="tech-badge">BLE</span>
+                        <span class="tech-badge">UART</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ Automated device discovery & pairing</div>
+                        <div class="feature">✓ AT command validation</div>
+                        <div class="feature">✓ Mobile automation with Appium</div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🏭</div>
+                        <h3 class="project-title">Industrial GenAIoT</h3>
+                    </div>
+                    <p class="project-description">
+                        Industrial IoT validation ensuring reliable machine-to-cloud data flow with OPC UA integration and Azure services.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">OPC UA</span>
+                        <span class="tech-badge">Azure IoT</span>
+                        <span class="tech-badge">C2D</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ End-to-end data pipeline validation</div>
+                        <div class="feature">✓ FOTA update testing</div>
+                        <div class="feature">✓ Automated reporting & analysis</div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🏠</div>
+                        <h3 class="project-title">Smart Home IoT Testing</h3>
+                    </div>
+                    <p class="project-description">
+                        Manual and automation testing of smart home applications with Matter protocol and firmware validation.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Android</span>
+                        <span class="tech-badge">Matter</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">OTA</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ Wi-Fi & Matter connectivity testing</div>
+                        <div class="feature">✓ Firmware flashing validation</div>
+                        <div class="feature">✓ Multi-platform app testing</div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🤖</div>
+                        <h3 class="project-title">GitLab Duo Ultimate</h3>
+                    </div>
+                    <p class="project-description">
+                        AI-assisted QA workflows using GitLab Duo for CI/CD debugging, security validation, and test improvement.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">GitLab CI/CD</span>
+                        <span class="tech-badge">AI Tools</span>
+                        <span class="tech-badge">SAST</span>
+                        <span class="tech-badge">MR Review</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ CI/CD pipeline failure analysis</div>
+                        <div class="feature">✓ AI-assisted security scanning</div>
+                        <div class="feature">✓ Test case improvement</div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🚗</div>
+                        <h3 class="project-title">Android Automotive Automation</h3>
+                    </div>
+                    <p class="project-description">
+                        Automation of Android Auto and automotive interfaces with UI behavior validation and image comparison.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Appium</span>
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Android Studio</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ Drive mode automation</div>
+                        <div class="feature">✓ UI validation with image comparison</div>
+                        <div class="feature">✓ Real device testing</div>
+                    </div>
+                </div>
+
+                <!-- Project 7 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">💻</div>
+                        <h3 class="project-title">Code Insights Platform</h3>
+                    </div>
+                    <p class="project-description">
+                        Full-stack platform for hosting coding contests with ranking comparison and collaborative coding environment.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">React.js</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">MongoDB</span>
+                        <span class="tech-badge">Express.js</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ Contest hosting system</div>
+                        <div class="feature">✓ Cross-platform ranking comparison</div>
+                        <div class="feature">✓ Collaborative coding environment</div>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🛒</div>
+                        <h3 class="project-title">Smart Grocery Store</h3>
+                    </div>
+                    <p class="project-description">
+                        AI-powered e-commerce validation with face recognition and emotion detection on Qualcomm edge hardware.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Android</span>
+                        <span class="tech-badge">AI/ML</span>
+                        <span class="tech-badge">Edge Computing</span>
+                    </div>
+                    <div class="project-features">
+                        <div class="feature">✓ Face recognition validation</div>
+                        <div class="feature">✓ Edge case testing</div>
+                        <div class="feature">✓ Hardware integration testing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-number">05.</span> Get In Touch
+            </h2>
+            <div class="contact-wrapper">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="contact-text">
+                        <h3 class="form-title">Send me a message</h3>
+                        <p class="contact-intro">
+                            Have a question or want to work together? Fill out the form and I'll get back to you as soon as possible!
+                        </p>
+                    </div>
+                    
+                    <form id="contact-form" class="contact-form" action="https://formspree.io/f/xbdaroev" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your Name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required placeholder="What's this about?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required placeholder="Your message here..." rows="5"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                        
+                        <div id="form-status" class="form-status"></div>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-container">
+                    <h3 class="info-title">Contact Information</h3>
+                    <p class="info-subtitle">Feel free to reach out through any of these channels</p>
+                    
+                    <div class="contact-links">
+                        <a href="mailto:mohitmungra2003@gmail.com" class="contact-link">
+                            <div class="link-icon">📧</div>
+                            <div class="link-text">
+                                <div class="link-label">Email</div>
+                                <div class="link-value">mohitmungra2003@gmail.com</div>
+                            </div>
+                        </a>
+                        <a href="tel:+919408324215" class="contact-link">
+                            <div class="link-icon">📱</div>
+                            <div class="link-text">
+                                <div class="link-label">Phone</div>
+                                <div class="link-value">+91 9408324215</div>
+                            </div>
+                        </a>
+                        <a href="https://www.linkedin.com/in/mohit-mungra-840a2a222" target="_blank" class="contact-link">
+                            <div class="link-icon">💼</div>
+                            <div class="link-text">
+                                <div class="link-label">LinkedIn</div>
+                                <div class="link-value">mohit-mungra</div>
+                            </div>
+                        </a>
+                        <a href="https://github.com/mohitmungra" target="_blank" class="contact-link">
+                            <div class="link-icon">🔧</div>
+                            <div class="link-text">
+                                <div class="link-label">GitHub</div>
+                                <div class="link-value">mohitmungra</div>
+                            </div>
+                        </a>
+                        <div class="contact-link">
+                            <div class="link-icon">📍</div>
+                            <div class="link-text">
+                                <div class="link-label">Location</div>
+                                <div class="link-value">Ahmedabad, Gujarat</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="availability-badge">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Currently working at MosChip Technologies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">  
+            <p class="footer-tagline">
+                ⬢ SYSTEM SHUTDOWN — Thanks for visiting
+            </p>
+            <p class="footer-text">
+                Designed & Built by Mohit Mungra | © 2025
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
