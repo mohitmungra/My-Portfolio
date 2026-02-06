@@ -90,11 +90,11 @@ function highlightNavigation() {
 
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
             navLinks.forEach(link => {
-                link.style.color = '';
+                link.classList.remove('active');
                 if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.style.color = 'var(--primary-cyan)';
+                    link.classList.add('active');
                 }
-            });
+            }); 
         }
     });
 }

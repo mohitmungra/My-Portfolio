@@ -136,7 +136,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(10, 10, 15, 0.8);
+    background: rgba(10,10,15,0.6);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(0, 240, 255, 0.2);
     padding: 1rem 0;
@@ -212,7 +212,7 @@ body {
 }
 
 .nav-link {
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.8);
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -231,6 +231,15 @@ body {
     background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
     transition: width 0.3s ease;
 }
+
+.nav-link.active {
+    color: var(--primary-cyan);
+}
+
+.nav-link.active::before {
+    width: 100%;
+}
+
 
 .nav-link:hover {
     color: var(--primary-cyan);
@@ -578,7 +587,7 @@ body {
 
 .about-text p {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255,255,255,0.85);
     margin-bottom: 1.5rem;
     line-height: 1.8;
 }
@@ -607,7 +616,7 @@ body {
 
 .highlight-text {
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.8);
 }
 
 .about-image {
@@ -847,7 +856,7 @@ body {
 }
 
 .timeline-company {
-    color: var(--primary-cyan);
+    color: rgba(255,255,255,0.85);
     font-size: 1.2rem;
     margin-bottom: 1rem;
 }
@@ -858,7 +867,7 @@ body {
 }
 
 .timeline-points li {
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.8);
     padding-left: 1.5rem;
     margin-bottom: 0.5rem;
     position: relative;
@@ -938,11 +947,12 @@ body {
 }
 
 .project-description {
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.85);
     margin-bottom: 1.5rem;
     line-height: 1.6;
     flex-grow: 1;
 }
+
 
 .project-tech {
     display: flex;
@@ -970,7 +980,7 @@ body {
 }
 
 .feature {
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.75);
     font-size: 0.95rem;
     display: flex;
     align-items: center;
@@ -988,6 +998,12 @@ body {
     gap: 3rem;
     max-width: 1200px;
     margin: 0 auto;
+    align-items: stretch;
+}
+
+.contact-form-container,
+.contact-info-container {
+    height: 100%;
 }
 
 /* Contact Form */
@@ -1098,12 +1114,14 @@ body {
     color: var(--primary-magenta);
 }
 
-/* Contact Info */
 .contact-info-container {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    height: 100%;
+    justify-content: space-between;
 }
+
 
 .info-title {
     font-family: 'Orbitron', sans-serif;
@@ -1151,7 +1169,7 @@ body {
 }
 
 .link-label {
-    color: var(--text-muted);
+    color: #ffffff;
     font-size: 0.85rem;
     margin-bottom: 0.2rem;
     text-transform: uppercase;
@@ -1244,6 +1262,7 @@ body {
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 2rem;
+        align-items: stretch;
     }
     
     .container {
