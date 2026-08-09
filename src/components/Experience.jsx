@@ -1,88 +1,89 @@
 import './Experience.css';
 
-const timeline = [
+const items = [
   {
-    date: 'Dec 2024 — Present',
-    type: 'work',
+    period: 'Dec 2024 — Present',
     role: 'Digital Engineer',
     org: 'MosChip Technologies Limited',
-    color: '#00f0ff',
+    type: 'Full-Time',
+    color: '#9333ea',
     points: [
-      'BSP validation including DDR RAM memory testing (21 structured test cases) and embedded protocol validation on Raspberry Pi',
-      'Built AI evaluation framework using DeepEval for automated LLM response assessment — relevancy, faithfulness, contextual precision',
-      'Developing automation frameworks for Bluetooth, Wi-Fi, and web application testing',
-      'Working with embedded systems (ESP32, Raspberry Pi CM4) and industrial IoT platforms',
-      'Protocol-based testing including OCPP, MQTT, Modbus TCP/IP, OPC UA, and Azure IoT',
+      'BSP validation — DDR RAM memory testing (21 test cases: pattern, address, bandwidth, stress, rowhammer)',
+      'Built AI evaluation framework using DeepEval for automated LLM response assessment',
+      'Automation frameworks for BLE, Wi-Fi, Selenium web, and Appium mobile testing',
+      'Protocol testing — OCPP, MQTT, Modbus TCP/IP, OPC UA, Azure IoT, DNP3.0',
+      'Embedded systems work on ESP32, Raspberry Pi CM4 — I2C, SPI, UART, CAN',
     ],
   },
   {
-    date: 'May 2023 — Jun 2023',
-    type: 'intern',
-    role: 'Frontend Developer (Intern)',
+    period: 'May 2023 — Jun 2023',
+    role: 'Frontend Developer',
     org: 'Miracle Technolabs',
-    color: '#7b2fff',
+    type: 'Internship',
+    color: '#f97316',
     points: [
       'Built responsive company website using React.js and JavaScript',
-      'Strengthened frontend skills through real-world project implementation',
-      'Followed industry-standard development practices and version control with Git',
+      'Followed industry-standard development practices and Git workflow',
+      'Strengthened frontend skills through real-world project delivery',
     ],
   },
   {
-    date: '2021 — 2025',
-    type: 'edu',
-    role: 'Bachelor of Technology — Information Technology',
+    period: '2021 — 2025',
+    role: 'B.Tech — Information Technology',
     org: 'CHARUSAT University',
-    color: '#00ff88',
+    type: 'Education',
+    color: '#22d3ee',
     points: [
       'CGPA: 8.1 / 10.0',
       'SSIP 2nd Runner\'s Up — Student Startup & Innovation Hackathon',
-      'Training & Placement Representative',
-      'Central Council Member & AWS Cloud Club Founder Member',
+      'Training & Placement Representative for the department',
+      'Central Council Member & AWS Cloud Club founding member',
     ],
   },
 ];
 
+const typeColors = { 'Full-Time': '#9333ea', 'Internship': '#f97316', 'Education': '#22d3ee' };
+
 export default function Experience() {
   return (
-    <section id="experience" className="experience section-content">
+    <section id="experience" className="experience">
       <div className="container">
-        <h2 className="section-title">
-          <span className="title-number">03.</span>
-          Professional Journey
-        </h2>
+        <div className="section-label">03. EXPERIENCE</div>
+        <h2 className="section-title-main">Professional <span>Journey</span></h2>
 
-        <div className="timeline">
-          {timeline.map((item, i) => (
-            <div key={i} className="timeline-item">
-              {/* Node */}
-              <div className="timeline-node" style={{ '--node-color': item.color }}>
-                <div className="node-dot" />
-                <div className="node-ring" />
-              </div>
+        <div className="exp-cards">
+          {items.map((item, i) => (
+            <div key={i} className="exp-card" style={{ '--ec': item.color }}>
+              {/* Number */}
+              <div className="exp-num">0{i + 1}</div>
 
-              {/* Content */}
-              <div className="timeline-card glass-card" style={{ '--card-accent': item.color }}>
-                <div className="timeline-meta">
-                  <span className="timeline-date" style={{ color: item.color, borderColor: item.color + '40' }}>
-                    {item.date}
-                  </span>
-                  <span className={`timeline-type type-${item.type}`}>
-                    {item.type === 'work' ? 'Full-Time' : item.type === 'intern' ? 'Internship' : 'Education'}
-                  </span>
+              {/* Header */}
+              <div className="exp-head">
+                <div className="exp-left-meta">
+                  <span className="exp-period">{item.period}</span>
+                  <span className="exp-type-badge" style={{ background: typeColors[item.type] + '18', color: typeColors[item.type], borderColor: typeColors[item.type] + '40' }}>{item.type}</span>
                 </div>
-
-                <h3 className="timeline-role">{item.role}</h3>
-                <h4 className="timeline-org" style={{ color: item.color }}>{item.org}</h4>
-
-                <ul className="timeline-points">
-                  {item.points.map((pt, j) => (
-                    <li key={j}>
-                      <span className="point-bullet" style={{ background: item.color }} />
-                      {pt}
-                    </li>
-                  ))}
-                </ul>
+                <div className="exp-right-meta">
+                  <div className="exp-role">{item.role}</div>
+                  <div className="exp-org" style={{ color: item.color }}>{item.org}</div>
+                </div>
               </div>
+
+              {/* Divider */}
+              <div className="exp-divider" style={{ background: `linear-gradient(to right, ${item.color}, transparent)` }} />
+
+              {/* Points */}
+              <ul className="exp-points">
+                {item.points.map((p, j) => (
+                  <li key={j}>
+                    <span className="exp-bullet" style={{ background: item.color, boxShadow: `0 0 8px ${item.color}` }} />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Glow bg */}
+              <div className="exp-glow" style={{ background: `radial-gradient(ellipse at 0% 50%, ${item.color}08 0%, transparent 60%)` }} />
             </div>
           ))}
         </div>

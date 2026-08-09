@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const navLinks = [
+const LINKS = [
   { href: '#home',       label: 'Home' },
   { href: '#about',      label: 'About' },
   { href: '#skills',     label: 'Skills' },
@@ -11,62 +11,57 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled]  = useState(false);
+  const [open, setOpen]          = useState(false);
+  const [active, setActive]      = useState('home');
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-
-      const sections = navLinks.map(l => l.href.replace('#', ''));
-      let current = 'home';
-      sections.forEach(id => {
+      setScrolled(window.scrollY > 50);
+      const ids = LINKS.map(l => l.href.slice(1));
+      let cur = 'home';
+      ids.forEach(id => {
         const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 200) current = id;
+        if (el && window.scrollY >= el.offsetTop - 180) cur = id;
       });
-      setActiveSection(current);
+      setActive(cur);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleNav = (e, href) => {
+  const nav = (e, href) => {
     e.preventDefault();
-    setMenuOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setOpen(false);
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="nav-container container">
-        <a href="#home" className="logo" onClick={e => handleNav(e, '#home')}>
-          <span className="logo-bracket">&lt;</span>
-          <span className="logo-text">MM</span>
-          <span className="logo-bracket">/&gt;</span>
+    <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
+      <div className="nav-inner container">
+        <a href="#home" className="nav-logo" onClick={e => nav(e, '#home')}>
+          <span className="logo-m">M</span>
+          <span className="logo-dot">·</span>
+          <span className="logo-m2">M</span>
         </a>
 
-        <button
-          className={`hamburger ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(v => !v)}
-          aria-label="Toggle menu"
-        >
-          <span /><span /><span />
-        </button>
-
-        <ul className={`nav-menu ${menuOpen ? 'open' : ''}`}>
-          {navLinks.map(({ href, label }) => (
+        <ul className={`nav-links ${open ? 'open' : ''}`}>
+          {LINKS.map(({ href, label }) => (
             <li key={href}>
               <a
                 href={href}
-                className={`nav-link ${activeSection === href.replace('#','') ? 'active' : ''}`}
-                onClick={e => handleNav(e, href)}
+                className={`nav-a ${active === href.slice(1) ? 'active' : ''}`}
+                onClick={e => nav(e, href)}
               >
                 {label}
               </a>
             </li>
           ))}
         </ul>
+
+        <button className={`nav-burger ${open ? 'open' : ''}`} onClick={() => setOpen(v => !v)}>
+          <span /><span /><span />
+        </button>
       </div>
     </nav>
   );

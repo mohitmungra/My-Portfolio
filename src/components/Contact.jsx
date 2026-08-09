@@ -1,144 +1,92 @@
 import { useState, useRef } from 'react';
 import './Contact.css';
 
-const contactLinks = [
-  {
-    icon: '✉',
-    label: 'Email',
-    value: 'mohitmungra2003@gmail.com',
-    href: 'mailto:mohitmungra2003@gmail.com',
-    color: '#00f0ff',
-  },
-  {
-    icon: '💼',
-    label: 'LinkedIn',
-    value: 'mohit-mungra',
-    href: 'https://www.linkedin.com/in/mohit-mungra-840a2a222',
-    color: '#7b2fff',
-  },
-  {
-    icon: '⌥',
-    label: 'GitHub',
-    value: 'mohitmungra',
-    href: 'https://github.com/mohitmungra',
-    color: '#ff006e',
-  },
-  {
-    icon: '◎',
-    label: 'Location',
-    value: 'Ahmedabad, Gujarat',
-    href: null,
-    color: '#00ff88',
-  },
+const info = [
+  { icon: '✉', label: 'Email', val: 'mohitmungra2003@gmail.com', href: 'mailto:mohitmungra2003@gmail.com', color: '#9333ea' },
+  { icon: '💼', label: 'LinkedIn', val: 'mohit-mungra', href: 'https://www.linkedin.com/in/mohit-mungra-840a2a222', color: '#f97316' },
+  { icon: '⌥',  label: 'GitHub', val: 'mohitmungra', href: 'https://github.com/mohitmungra', color: '#22d3ee' },
+  { icon: '◎',  label: 'Location', val: 'Ahmedabad, Gujarat', href: null, color: '#10b981' },
 ];
 
 export default function Contact() {
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [status, setStatus] = useState('idle');
   const formRef = useRef();
 
-  const handleSubmit = async (e) => {
+  const submit = async e => {
     e.preventDefault();
     setStatus('sending');
-    const formData = new FormData(formRef.current);
     try {
-      const res = await fetch('https://formspree.io/f/xbdaroev', {
-        method: 'POST',
-        body: formData,
-        headers: { Accept: 'application/json' },
-      });
-      if (res.ok) {
-        setStatus('success');
-        formRef.current.reset();
-        setTimeout(() => setStatus('idle'), 5000);
-      } else {
-        setStatus('error');
-      }
-    } catch {
-      setStatus('error');
-    }
+      const res = await fetch('https://formspree.io/f/xbdaroev', { method: 'POST', body: new FormData(formRef.current), headers: { Accept: 'application/json' } });
+      setStatus(res.ok ? 'success' : 'error');
+      if (res.ok) { formRef.current.reset(); setTimeout(() => setStatus('idle'), 5000); }
+    } catch { setStatus('error'); }
   };
 
   return (
-    <section id="contact" className="contact section-content">
+    <section id="contact" className="contact">
       <div className="container">
-        <h2 className="section-title">
-          <span className="title-number">05.</span>
-          Get In Touch
-        </h2>
+        <div className="section-label">05. CONTACT</div>
+        <h2 className="section-title-main">Let's <span>Connect</span></h2>
 
-        <div className="contact-grid">
-          {/* Form */}
-          <div className="contact-form-wrap glass-card">
-            <h3 className="form-heading">Send a Transmission</h3>
-            <p className="form-subtext">
-              Have a question or want to work together? Fill out the form and I'll get back to you ASAP.
+        <div className="contact-layout">
+          {/* LEFT: Big tagline */}
+          <div className="contact-left">
+            <p className="contact-tagline">
+              Got a project?<br />
+              Let's build something<br />
+              <span>remarkable.</span>
             </p>
 
-            <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="cf-name">Name</label>
-                  <input id="cf-name" name="name" type="text" required placeholder="Your Name" />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="cf-email">Email</label>
-                  <input id="cf-email" name="email" type="email" required placeholder="your@email.com" />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="cf-subject">Subject</label>
-                <input id="cf-subject" name="subject" type="text" required placeholder="What's this about?" />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="cf-message">Message</label>
-                <textarea id="cf-message" name="message" rows={5} required placeholder="Your message here..." />
-              </div>
-
-              <button type="submit" className={`btn btn-primary submit-btn ${status}`} disabled={status === 'sending'}>
-                {status === 'idle'    && <><span>Send Message</span><span className="btn-arrow">→</span></>}
-                {status === 'sending' && <><span className="sending-dot" /><span>Transmitting...</span></>}
-                {status === 'success' && <span>✓ Transmission Complete!</span>}
-                {status === 'error'   && <span>✕ Failed — Try Again</span>}
-              </button>
-            </form>
-          </div>
-
-          {/* Info */}
-          <div className="contact-info">
-            <div className="info-top">
-              <h3 className="info-heading">Contact Channels</h3>
-              <p className="info-subtext">Reach out through any of these channels</p>
-            </div>
-
-            <div className="contact-cards">
-              {contactLinks.map(({ icon, label, value, href, color }) => {
+            <div className="contact-info-list">
+              {info.map(({ icon, label, val, href, color }) => {
                 const Tag = href ? 'a' : 'div';
                 return (
-                  <Tag
-                    key={label}
-                    {...(href ? { href, target: label !== 'Email' ? '_blank' : undefined, rel: 'noopener noreferrer' } : {})}
-                    className="contact-card glass-card"
-                    style={{ '--link-color': color }}
-                  >
-                    <div className="contact-card-icon" style={{ color, borderColor: color + '40', background: color + '12' }}>
-                      {icon}
+                  <Tag key={label} {...(href ? { href, target: label !== 'Email' ? '_blank' : undefined, rel: 'noopener noreferrer' } : {})} className="cinfo-row">
+                    <span className="cinfo-icon" style={{ color }}>{icon}</span>
+                    <div className="cinfo-text">
+                      <span className="cinfo-label">{label}</span>
+                      <span className="cinfo-val" style={{ color }}>{val}</span>
                     </div>
-                    <div className="contact-card-text">
-                      <div className="contact-card-label">{label}</div>
-                      <div className="contact-card-value" style={{ color }}>{value}</div>
-                    </div>
-                    {href && <span className="card-arrow" style={{ color }}>→</span>}
+                    {href && <span className="cinfo-arrow" style={{ color }}>→</span>}
                   </Tag>
                 );
               })}
             </div>
 
-            <div className="availability">
+            <div className="avail-pill">
               <span className="avail-dot" />
-              <span>Currently employed at <strong>MosChip Technologies</strong></span>
+              Employed · MosChip Technologies
             </div>
+          </div>
+
+          {/* RIGHT: Form */}
+          <div className="contact-right glass">
+            <form ref={formRef} onSubmit={submit} className="cform">
+              <div className="cform-row">
+                <div className="cfield">
+                  <label htmlFor="c-name">Name</label>
+                  <input id="c-name" name="name" type="text" required placeholder="Your Name" />
+                </div>
+                <div className="cfield">
+                  <label htmlFor="c-email">Email</label>
+                  <input id="c-email" name="email" type="email" required placeholder="your@email.com" />
+                </div>
+              </div>
+              <div className="cfield">
+                <label htmlFor="c-subject">Subject</label>
+                <input id="c-subject" name="subject" type="text" required placeholder="What's this about?" />
+              </div>
+              <div className="cfield">
+                <label htmlFor="c-message">Message</label>
+                <textarea id="c-message" name="message" rows={5} required placeholder="Your message..." />
+              </div>
+              <button type="submit" className={`btn btn-fill csend-btn ${status}`} disabled={status === 'sending'}>
+                {status === 'idle'    && 'Send Message →'}
+                {status === 'sending' && '⟳ Transmitting...'}
+                {status === 'success' && '✓ Delivered!'}
+                {status === 'error'   && '✕ Error — Retry'}
+              </button>
+            </form>
           </div>
         </div>
       </div>

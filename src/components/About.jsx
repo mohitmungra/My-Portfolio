@@ -1,61 +1,71 @@
-import { useRef } from 'react';
 import './About.css';
 
 const highlights = [
-  { icon: '⚡', text: 'End-to-end testing expertise across embedded, mobile & backend systems' },
-  { icon: '🔧', text: 'BSP & embedded protocol validation — I2C, SPI, UART, CAN, EEPROM' },
-  { icon: '🤖', text: 'AI response evaluation with DeepEval — faithfulness, relevancy, precision' },
-  { icon: '📊', text: 'Log analysis, automated reporting & CI/CD pipeline integration' },
+  { icon: '⚡', title: 'Test Automation',  desc: 'End-to-end automation across embedded, mobile & web systems' },
+  { icon: '🔌', title: 'BSP & Protocols',  desc: 'DDR RAM, I2C, SPI, UART, CAN, OCPP, MQTT validation' },
+  { icon: '🧠', title: 'AI Evaluation',    desc: 'LLM testing with DeepEval — faithfulness, relevancy, precision' },
+  { icon: '☁',  title: 'Cloud & IoT',      desc: 'Azure IoT Hub, AWS, OPC UA, industrial data pipelines' },
 ];
 
 export default function About() {
-  const imgRef = useRef();
-
   return (
-    <section id="about" className="about section-content">
+    <section id="about" className="about">
       <div className="container">
-        <h2 className="section-title">
-          <span className="title-number">01.</span>
-          About Me
-        </h2>
-
+        <div className="section-label">01. ABOUT</div>
         <div className="about-grid">
-          {/* Image Side */}
-          <div className="about-image-wrap">
-            <div className="hex-frame" ref={imgRef}>
-              <div className="hex-ring hex-ring-1" />
-              <div className="hex-ring hex-ring-2" />
-              <div className="hex-ring hex-ring-3" />
-              <div className="profile-img-wrap">
-                <img src="/MM.jpeg" alt="Mohit Mungra" className="profile-img" />
-                <div className="img-overlay" />
+          {/* Left — Image */}
+          <div className="about-img-col">
+            <div className="img-scene">
+              {/* Rotating hex rings */}
+              <div className="hex-orbit o1"><div className="orbit-dot od-p" /></div>
+              <div className="hex-orbit o2"><div className="orbit-dot od-o" /></div>
+              <div className="hex-orbit o3"><div className="orbit-dot od-c" /></div>
+              {/* Profile */}
+              <div className="profile-circle">
+                <img src="/MM.jpeg" alt="Mohit Mungra" />
+                <div className="profile-overlay" />
               </div>
+              {/* Corner labels */}
+              <div className="corner-tag tag-tl">ESP32</div>
+              <div className="corner-tag tag-br">DeepEval</div>
             </div>
-            {/* Floating tags */}
-            <div className="float-tag tag-1">IoT Engineer</div>
-            <div className="float-tag tag-2">AI Evaluator</div>
-            <div className="float-tag tag-3">BSP Validation</div>
           </div>
 
-          {/* Text Side */}
-          <div className="about-text">
-            <p className="about-intro">
-              Digital Engineer with <span className="highlight-word">1+ years</span> of hands-on experience in automation testing, BSP validation, AI evaluation frameworks, and system-level validation across embedded, mobile, and backend systems.
+          {/* Right — Text */}
+          <div className="about-text-col">
+            <h2 className="section-title-main">
+              Crafting <span>precision</span> at the edge of hardware & software
+            </h2>
+
+            <p>
+              Digital Engineer with <strong>1+ years</strong> of hands-on experience at MosChip Technologies, specializing in automation testing, BSP validation, AI evaluation frameworks, and system-level validation across embedded, mobile, and backend systems.
             </p>
             <p>
-              I specialize in protocol-based systems, EV charging solutions, IoT and Android applications, BSP and DDR RAM validation, AI response evaluation, and web automation frameworks. My approach combines meticulous attention to detail with systematic problem-solving to ensure robust system validation.
-            </p>
-            <p>
-              Known for breaking down complex systems, identifying edge cases, and improving test coverage through structured test cases and automation. Quick learner with strong fundamentals in testing concepts, protocols, scripting, and AI-based evaluation frameworks.
+              I bridge the gap between silicon and software — from validating DDR RAM across 21 test cases on Raspberry Pi, to evaluating AI language model responses with DeepEval, to building OCPP-based EV charging test benches.
             </p>
 
+            {/* Highlight grid */}
             <div className="about-highlights">
-              {highlights.map(({ icon, text }) => (
-                <div key={text} className="highlight-item glass-card">
-                  <div className="highlight-icon">{icon}</div>
-                  <div className="highlight-text">{text}</div>
+              {highlights.map(h => (
+                <div key={h.title} className="highlight glass">
+                  <div className="highlight-icon">{h.icon}</div>
+                  <div>
+                    <div className="highlight-title">{h.title}</div>
+                    <div className="highlight-desc">{h.desc}</div>
+                  </div>
                 </div>
               ))}
+            </div>
+
+            <div className="about-cta">
+              <a href="#contact" className="btn btn-fill"
+                onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                Let's Connect ↗
+              </a>
+              <a href="#experience" className="btn btn-outline"
+                onClick={e => { e.preventDefault(); document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                My Journey
+              </a>
             </div>
           </div>
         </div>

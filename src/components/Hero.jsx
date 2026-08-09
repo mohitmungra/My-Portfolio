@@ -1,176 +1,257 @@
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Torus } from '@react-three/drei';
+import { Icosahedron, MeshDistortMaterial, Ring } from '@react-three/drei';
+import * as THREE from 'three';
 import './Hero.css';
 
-/* ── 3D Rotating Torus ── */
-function SpinningTorus() {
-  const mesh = useRef();
-  useFrame((state) => {
-    if (mesh.current) {
-      mesh.current.rotation.x = state.clock.elapsedTime * 0.4;
-      mesh.current.rotation.y = state.clock.elapsedTime * 0.6;
-    }
-  });
+/* ── Custom Cursor ── */
+function CustomCursor() {
+  const dot  = useRef();
+  const ring = useRef();
+  const pos  = useRef({ x: 0, y: 0 });
+  const ring_pos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const move = e => { pos.current = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener('mousemove', move);
+
+    let raf;
+    const tick = () => {
+      ring_pos.current.x += (pos.current.x - ring_pos.current.x) * 0.12;
+      ring_pos.current.y += (pos.current.y - ring_pos.current.y) * 0.12;
+      if (dot.current) {
+        dot.current.style.left  = pos.current.x + 'px';
+        dot.current.style.top   = pos.current.y + 'px';
+      }
+      if (ring.current) {
+        ring.current.style.left = ring_pos.current.x + 'px';
+        ring.current.style.top  = ring_pos.current.y + 'px';
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    tick();
+
+    const hover = () => ring.current?.classList.add('hovering');
+    const unhover = () => ring.current?.classList.remove('hovering');
+    document.querySelectorAll('a,button,.btn').forEach(el => {
+      el.addEventListener('mouseenter', hover);
+      el.addEventListener('mouseleave', unhover);
+    });
+
+    return () => { window.removeEventListener('mousemove', move); cancelAnimationFrame(raf); };
+  }, []);
+
   return (
-    <Torus ref={mesh} args={[1.2, 0.35, 16, 60]}>
-      <meshStandardMaterial
-        color="#00f0ff"
-        emissive="#00f0ff"
-        emissiveIntensity={0.6}
-        wireframe={false}
-        metalness={0.8}
-        roughness={0.1}
-      />
-    </Torus>
+    <>
+      <div ref={dot}  className="cursor-dot"  />
+      <div ref={ring} className="cursor-ring" />
+    </>
   );
 }
 
-/* ── Typing effect hook ── */
-function useTyping(words, speed = 90, pause = 1800) {
-  const [displayed, setDisplayed] = useState('');
-  const [wordIdx, setWordIdx] = useState(0);
-  const [charIdx, setCharIdx] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+/* ── 3D Distorted Sphere ── */
+function DistortSphere() {
+  const meshRef = useRef();
+  const [hovered, setHovered] = useState(false);
 
-  useEffect(() => {
-    const word = words[wordIdx];
-    let timeout;
-    if (!deleting && charIdx < word.length) {
-      timeout = setTimeout(() => setCharIdx(c => c + 1), speed);
-    } else if (!deleting && charIdx === word.length) {
-      timeout = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && charIdx > 0) {
-      timeout = setTimeout(() => setCharIdx(c => c - 1), speed / 2);
-    } else if (deleting && charIdx === 0) {
-      setDeleting(false);
-      setWordIdx(i => (i + 1) % words.length);
+  useFrame(({ clock }) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = Math.sin(clock.elapsedTime * 0.3) * 0.3;
+      meshRef.current.rotation.y = clock.elapsedTime * 0.4;
     }
-    setDisplayed(word.slice(0, charIdx));
-    return () => clearTimeout(timeout);
-  }, [charIdx, deleting, wordIdx, words, speed, pause]);
-
-  return displayed;
-}
-
-/* ── Counter component ── */
-function Counter({ target, suffix = '+' }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        let start = 0;
-        const step = target / 60;
-        const timer = setInterval(() => {
-          start += step;
-          if (start >= target) { setCount(target); clearInterval(timer); }
-          else setCount(Math.floor(start));
-        }, 25);
-        observer.disconnect();
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-const roles = ['Digital Engineer', 'IoT Specialist', 'AI Evaluator', 'Embedded Systems', 'QA Automation'];
-
-export default function Hero() {
-  const typed = useTyping(roles);
+  });
 
   return (
-    <section id="home" className="hero section-content">
-      <div className="hero-inner container">
-        {/* LEFT — Text */}
-        <div className="hero-text">
-          <div className="hero-badge">
-            <span className="badge-dot" />
-            Currently @ MosChip Technologies
-          </div>
+    <Icosahedron
+      ref={meshRef}
+      args={[1.6, 4]}
+      onPointerOver={() => setHovered(true)}
+      onPointerOut={() => setHovered(false)}
+    >
+      <MeshDistortMaterial
+        color={hovered ? '#f97316' : '#9333ea'}
+        emissive={hovered ? '#f97316' : '#7c3aed'}
+        emissiveIntensity={0.4}
+        distort={0.4}
+        speed={3}
+        roughness={0}
+        metalness={0.1}
+        wireframe={false}
+      />
+    </Icosahedron>
+  );
+}
 
-          <h1 className="hero-name" data-text="MOHIT MUNGRA">
-            MOHIT<br />MUNGRA
-          </h1>
+/* ── Orbit Ring ── */
+function OrbitRing({ radius, color, speed, tiltX = 0 }) {
+  const ref = useRef();
+  useFrame(({ clock }) => {
+    if (ref.current) ref.current.rotation.z = clock.elapsedTime * speed;
+  });
+  return (
+    <group rotation={[tiltX, 0, 0]}>
+      <Ring ref={ref} args={[radius - 0.01, radius + 0.01, 80]}>
+        <meshBasicMaterial color={color} opacity={0.5} transparent />
+      </Ring>
+    </group>
+  );
+}
 
-          <div className="hero-role">
-            <span className="role-prefix">// </span>
-            <span className="role-typed">{typed}</span>
-            <span className="cursor-blink">_</span>
-          </div>
+/* ── Orbiting Dot ── */
+function OrbitDot({ radius, speed, color, offset = 0, tiltX = 0 }) {
+  const ref = useRef();
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime * speed + offset;
+    if (ref.current) {
+      ref.current.position.x = Math.cos(t) * radius;
+      ref.current.position.z = Math.sin(t) * radius;
+      ref.current.position.y = Math.sin(t * 0.5) * (radius * Math.sin(tiltX));
+    }
+  });
+  return (
+    <mesh ref={ref}>
+      <sphereGeometry args={[0.06, 16, 16]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={1} />
+    </mesh>
+  );
+}
 
-          <p className="hero-desc">
-            Specializing in embedded systems, IoT platforms, AI evaluation frameworks, and protocol-based testing. Building the bridge between hardware and software intelligence.
-          </p>
+/* ── Typing hook ── */
+function useTyping(words, speed = 80, pause = 2000) {
+  const [text, setText] = useState('');
+  const state = useRef({ wi: 0, ci: 0, del: false });
 
-          <div className="hero-stats">
-            {[
-              { val: 1,  label: 'Years Exp.' },
-              { val: 10, label: 'Projects' },
-              { val: 15, label: 'Technologies' },
-            ].map(({ val, label }) => (
-              <div key={label} className="stat">
-                <div className="stat-num"><Counter target={val} /></div>
-                <div className="stat-label">{label}</div>
-              </div>
-            ))}
-          </div>
+  useEffect(() => {
+    let t;
+    const tick = () => {
+      const { wi, ci, del } = state.current;
+      const word = words[wi];
+      if (!del && ci < word.length) {
+        setText(word.slice(0, ci + 1));
+        state.current.ci++;
+        t = setTimeout(tick, speed);
+      } else if (!del && ci === word.length) {
+        t = setTimeout(() => { state.current.del = true; tick(); }, pause);
+      } else if (del && ci > 0) {
+        setText(word.slice(0, ci - 1));
+        state.current.ci--;
+        t = setTimeout(tick, speed / 2);
+      } else {
+        state.current.del = false;
+        state.current.wi  = (wi + 1) % words.length;
+        t = setTimeout(tick, 200);
+      }
+    };
+    t = setTimeout(tick, 400);
+    return () => clearTimeout(t);
+  }, [words, speed, pause]);
 
-          <div className="hero-btns">
-            <a href="#contact" className="btn btn-primary" onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>
-              Get In Touch
-            </a>
-            <a href="#projects" className="btn btn-secondary" onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}>
-              View Work
-            </a>
+  return text;
+}
+
+const ROLES = ['Digital Engineer', 'IoT Architect', 'AI Evaluator', 'BSP Validator', 'QA Automation'];
+
+/* ── Counter ── */
+function Counter({ end, suffix = '+', duration = 1800 }) {
+  const [val, setVal] = useState(0);
+  const ref = useRef();
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      const start = Date.now();
+      const tick = () => {
+        const p = Math.min((Date.now() - start) / duration, 1);
+        setVal(Math.floor(p * end));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      obs.disconnect();
+    });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [end, duration]);
+  return <span ref={ref}>{val}{suffix}</span>;
+}
+
+export default function Hero() {
+  const typed = useTyping(ROLES);
+
+  return (
+    <>
+      <CustomCursor />
+      <section id="home" className="hero">
+        {/* 3D Canvas — full background */}
+        <div className="hero-canvas">
+          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+            <ambientLight intensity={0.3} />
+            <pointLight position={[5, 5, 5]}   color="#9333ea" intensity={4} />
+            <pointLight position={[-5, -3, 3]}  color="#f97316" intensity={3} />
+            <pointLight position={[0, -5, -5]}  color="#22d3ee" intensity={2} />
+            <DistortSphere />
+            <OrbitRing radius={2.4} color="#9333ea" speed={0.6} tiltX={0.5} />
+            <OrbitRing radius={3.1} color="#f97316" speed={-0.4} tiltX={1.0} />
+            <OrbitRing radius={3.8} color="#22d3ee" speed={0.25} tiltX={0.2} />
+            <OrbitDot radius={2.4} speed={0.6}  color="#a855f7" offset={0}   tiltX={0.5} />
+            <OrbitDot radius={3.1} speed={-0.4} color="#fb923c" offset={2}   tiltX={1.0} />
+            <OrbitDot radius={3.8} speed={0.25} color="#22d3ee" offset={4}   tiltX={0.2} />
+          </Canvas>
+        </div>
+
+        {/* Content */}
+        <div className="hero-content container">
+          <div className="hero-left">
+            {/* Badge */}
+            <div className="hero-badge">
+              <span className="badge-pulse" />
+              MosChip Technologies · Ahmedabad
+            </div>
+
+            {/* Name */}
+            <div className="hero-name-wrap">
+              <h1 className="hero-name" data-text="MOHIT">MOHIT</h1>
+              <h1 className="hero-name name-2" data-text="MUNGRA">MUNGRA</h1>
+            </div>
+
+            {/* Role */}
+            <div className="hero-role">
+              <span className="role-slash">// </span>
+              <span className="role-text">{typed}</span>
+              <span className="cursor-caret">|</span>
+            </div>
+
+            <p className="hero-desc">
+              Building intelligent systems at the intersection of embedded hardware, IoT protocols, and AI evaluation. 1+ year transforming complex test challenges into automated precision.
+            </p>
+
+            {/* Stats */}
+            <div className="hero-stats">
+              {[{ n: 1, l: 'Year Exp' }, { n: 10, l: 'Projects' }, { n: 15, l: 'Technologies' }].map(s => (
+                <div key={s.l} className="stat-box">
+                  <span className="stat-n"><Counter end={s.n} /></span>
+                  <span className="stat-l">{s.l}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="hero-ctas">
+              <a href="#projects" className="btn btn-fill"
+                onClick={e => { e.preventDefault(); document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                View Projects <span>↗</span>
+              </a>
+              <a href="#contact" className="btn btn-outline"
+                onClick={e => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>
+                Contact Me
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* RIGHT — 3D Canvas + Terminal */}
-        <div className="hero-visual">
-          <div className="canvas-wrap">
-            <Canvas camera={{ position: [0, 0, 4] }}>
-              <ambientLight intensity={0.2} />
-              <pointLight position={[5, 5, 5]} color="#00f0ff" intensity={2} />
-              <pointLight position={[-5, -5, 5]} color="#7b2fff" intensity={1.5} />
-              <SpinningTorus />
-            </Canvas>
-            {/* Orbital rings (CSS) */}
-            <div className="orbit orbit-1" />
-            <div className="orbit orbit-2" />
-          </div>
-
-          {/* Terminal */}
-          <div className="terminal glass-card">
-            <div className="terminal-header">
-              <span className="term-dot red" /><span className="term-dot yellow" /><span className="term-dot green" />
-              <span className="terminal-title">mohit_profile.json</span>
-            </div>
-            <div className="terminal-body">
-              <p><span className="prompt">$</span> cat profile.json</p>
-              <p className="json">{'{'}</p>
-              <p className="json">  <span className="key">"name"</span>: <span className="str">"Mohit Mungra"</span>,</p>
-              <p className="json">  <span className="key">"role"</span>: <span className="str">"Digital Engineer"</span>,</p>
-              <p className="json">  <span className="key">"location"</span>: <span className="str">"Ahmedabad, Gujarat"</span>,</p>
-              <p className="json">  <span className="key">"company"</span>: <span className="str">"MosChip Technologies"</span>,</p>
-              <p className="json">  <span className="key">"expertise"</span>: [<span className="str">"IoT"</span>, <span className="str">"BSP"</span>, <span className="str">"AI Eval"</span>],</p>
-              <p className="json">  <span className="key">"status"</span>: <span className="active-status">"Employed ✓"</span></p>
-              <p className="json">{'}'}</p>
-              <p><span className="prompt">$</span> <span className="cursor-blink">█</span></p>
-            </div>
-          </div>
+        {/* Scroll hint */}
+        <div className="scroll-hint">
+          <div className="scroll-wheel" /><span>SCROLL</span>
         </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="scroll-indicator">
-        <div className="scroll-line" />
-        <span>SCROLL</span>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

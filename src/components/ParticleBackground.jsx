@@ -1,116 +1,116 @@
 import { useEffect, useRef } from 'react';
 
+/* Interactive Neural Network / Mesh background */
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    let animationId;
-    let particles = [];
+    const ctx    = canvas.getContext('2d');
+    let raf;
+    const mouse = { x: -9999, y: -9999 };
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 
-    // Create stars
-    const count = Math.floor((window.innerWidth * window.innerHeight) / 8000);
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        z: Math.random() * canvas.width,
-        size: Math.random() * 1.5 + 0.3,
-        speed: Math.random() * 0.4 + 0.1,
-        opacity: Math.random() * 0.8 + 0.2,
-        twinkle: Math.random() * Math.PI * 2,
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        color: Math.random() > 0.92
-          ? (Math.random() > 0.5 ? '#00f0ff' : '#7b2fff')
-          : '#ffffff',
-      });
-    }
+    const N = Math.min(Math.floor((innerWidth * innerHeight) / 12000), 120);
+    const nodes = Array.from({ length: N }, () => ({
+      x: Math.random() * innerWidth,
+      y: Math.random() * innerHeight,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.8 + 0.6,
+    }));
 
-    // Nebula clouds (static blobs)
-    const nebulae = [
-      { x: 0.15, y: 0.2,  r: 250, color: 'rgba(123,47,255,0.04)' },
-      { x: 0.85, y: 0.7,  r: 300, color: 'rgba(0,240,255,0.03)'  },
-      { x: 0.5,  y: 0.5,  r: 200, color: 'rgba(255,0,110,0.025)' },
-      { x: 0.25, y: 0.75, r: 180, color: 'rgba(0,255,136,0.025)' },
-    ];
+    const MAX_DIST = 160;
+    const MOUSE_DIST = 120;
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw nebulae
-      nebulae.forEach(n => {
-        const grd = ctx.createRadialGradient(
-          n.x * canvas.width, n.y * canvas.height, 0,
-          n.x * canvas.width, n.y * canvas.height, n.r
-        );
-        grd.addColorStop(0, n.color);
-        grd.addColorStop(1, 'transparent');
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        ctx.arc(n.x * canvas.width, n.y * canvas.height, n.r, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      // Subtle grid
+      ctx.strokeStyle = 'rgba(147,51,234,0.04)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 80) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += 80) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
 
-      // Draw stars
-      particles.forEach(p => {
-        p.twinkle += p.twinkleSpeed;
-        const twinkleFactor = (Math.sin(p.twinkle) + 1) / 2;
-        const opacity = p.opacity * (0.5 + 0.5 * twinkleFactor);
-
-        ctx.globalAlpha = opacity;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Glow for colored stars
-        if (p.color !== '#ffffff') {
-          ctx.globalAlpha = opacity * 0.4;
-          ctx.shadowColor = p.color;
-          ctx.shadowBlur = 8;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size * 2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.shadowBlur = 0;
+      // Update & draw nodes
+      nodes.forEach(n => {
+        // Mouse repulsion
+        const dx = n.x - mouse.x, dy = n.y - mouse.y;
+        const d = Math.hypot(dx, dy);
+        if (d < MOUSE_DIST) {
+          const f = (MOUSE_DIST - d) / MOUSE_DIST * 0.015;
+          n.vx += (dx / d) * f;
+          n.vy += (dy / d) * f;
         }
 
-        // Drift
-        p.y += p.speed * 0.1;
-        p.x += p.speed * 0.05 * Math.sin(p.twinkle * 0.3);
-        if (p.y > canvas.height) { p.y = 0; p.x = Math.random() * canvas.width; }
+        n.vx *= 0.99; n.vy *= 0.99;
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+        // Node dot
+        const mdist = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+        const glow = mdist < MOUSE_DIST ? 1 : 0.5;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(147,51,234,${glow * 0.7})`;
+        ctx.fill();
       });
 
-      ctx.globalAlpha = 1;
-      animationId = requestAnimationFrame(draw);
+      // Connect nearby nodes
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.25;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(147,51,234,${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+        // Mouse connections
+        const mx = nodes[i].x - mouse.x, my = nodes[i].y - mouse.y;
+        const md = Math.hypot(mx, my);
+        if (md < MOUSE_DIST) {
+          const alpha = (1 - md / MOUSE_DIST) * 0.6;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(249,115,22,${alpha})`;
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
     };
 
     draw();
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', resize);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
   }, []);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        id="bg-canvas"
-        style={{
-          position: 'fixed', top: 0, left: 0,
-          width: '100%', height: '100%',
-          zIndex: 0, pointerEvents: 'none'
-        }}
-      />
-      <div className="grid-overlay" />
-    </>
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed', inset: 0,
+        width: '100%', height: '100%',
+        zIndex: 0, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse at 20% 50%, rgba(147,51,234,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(249,115,22,0.04) 0%, transparent 50%), #020008',
+      }}
+    />
   );
 }
