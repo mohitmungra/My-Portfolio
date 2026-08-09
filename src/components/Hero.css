@@ -22,7 +22,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, rgba(2,0,8,0.92) 45%, rgba(2,0,8,0.2) 100%);
+    linear-gradient(to right, rgba(2,0,8,0.92) 50%, rgba(2,0,8,0.3) 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -36,7 +36,7 @@
 }
 
 .hero-left {
-  max-width: 640px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -51,7 +51,7 @@
   border: 1px solid rgba(249,115,22,0.3);
   border-radius: 100px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--secondary-lt);
   background: rgba(249,115,22,0.06);
   width: fit-content;
@@ -67,20 +67,21 @@
 }
 
 /* Name */
-.hero-name-wrap { line-height: 0.9; }
+.hero-name-wrap { line-height: 1.1; }
 
 .hero-name {
   font-family: var(--font-head);
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(2.8rem, 6.5vw, 4.8rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.02em;
   color: transparent;
-  background: linear-gradient(135deg, #ffffff 30%, var(--primary-lt) 70%);
+  background: linear-gradient(135deg, #ffffff 30%, var(--primary-lt) 70%, var(--secondary-lt) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   display: block;
   position: relative;
-  line-height: 1;
+  line-height: 1.15;
+  text-shadow: 0 0 40px rgba(147, 51, 234, 0.2);
 }
 
 .hero-name::before {
@@ -96,30 +97,20 @@
   -webkit-background-clip: unset;
 }
 
-.hero-name.name-2 {
-  background: linear-gradient(135deg, var(--secondary-lt) 0%, #ffffff 60%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.hero-name.name-2::before {
-  color: var(--secondary);
-  animation: glitch-2 8s infinite;
-  animation-delay: 3.5s;
-}
-
 /* Role */
 .hero-role {
-  font-family: var(--font-mono);
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-family: var(--font-sub);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
   color: var(--muted);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   min-height: 2em;
 }
 
 .role-slash { color: var(--secondary); }
-.role-text  { color: var(--primary-lt); min-width: 240px; }
+.role-text  { color: var(--primary-lt); min-width: 260px; }
 
 .cursor-caret {
   display: inline-block;
@@ -134,7 +125,7 @@
   font-size: 1rem;
   color: var(--muted);
   line-height: 1.8;
-  max-width: 500px;
+  max-width: 520px;
 }
 
 /* Stats */
@@ -144,7 +135,7 @@
 }
 
 .stat-box {
-  padding: 16px 24px;
+  padding: 16px 28px;
   border-right: 1px solid rgba(147,51,234,0.2);
   display: flex;
   flex-direction: column;
@@ -211,10 +202,10 @@
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero::before {
-    background: linear-gradient(to bottom, rgba(2,0,8,0.85) 50%, rgba(2,0,8,0.5) 100%);
+    background: linear-gradient(to bottom, rgba(2,0,8,0.88) 50%, rgba(2,0,8,0.5) 100%);
   }
   .hero-left { max-width: 100%; text-align: center; align-items: center; }
-  .hero-name { font-size: clamp(3rem, 14vw, 5rem); }
+  .hero-name { font-size: clamp(2.5rem, 10vw, 4rem); }
   .hero-ctas { justify-content: center; }
   .hero-stats { justify-content: center; }
 }

@@ -1,9 +1,8 @@
 /* ============================================================
-   VOID PORTFOLIO — COMPLETE DESIGN SYSTEM v2
+   VOID PORTFOLIO — DESIGN SYSTEM v3
    Theme: Ultra Dark Void + Electric Purple + Neon Orange
+   Fonts: Orbitron (Headings), Rajdhani (Subtitles), Inter (Body)
    ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
 /* ── TOKENS ── */
 :root {
@@ -16,30 +15,31 @@
   --secondary-lt:#fb923c;
   --cyan:        #22d3ee;
   --green:       #10b981;
-  --text:        #f1f5f9;
+  --text:        #f8fafc;
   --muted:       #94a3b8;
-  --dim:         #334155;
-  --border:      rgba(147, 51, 234, 0.18);
-  --border-glow: rgba(147, 51, 234, 0.5);
+  --dim:         #475569;
+  --border:      rgba(147, 51, 234, 0.2);
+  --border-glow: rgba(147, 51, 234, 0.6);
 
-  --glow-p:  0 0 20px rgba(147,51,234,0.5), 0 0 60px rgba(147,51,234,0.2);
-  --glow-o:  0 0 20px rgba(249,115,22,0.5), 0 0 60px rgba(249,115,22,0.2);
-  --glow-c:  0 0 20px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.15);
+  --glow-p:  0 0 24px rgba(147,51,234,0.5), 0 0 60px rgba(147,51,234,0.25);
+  --glow-o:  0 0 24px rgba(249,115,22,0.5), 0 0 60px rgba(249,115,22,0.25);
+  --glow-c:  0 0 24px rgba(34,211,238,0.4), 0 0 60px rgba(34,211,238,0.2);
 
-  --font-head: 'Syne', sans-serif;
+  --font-head: 'Orbitron', sans-serif;
+  --font-sub:  'Rajdhani', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  --ease:    cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-out:cubic-bezier(0, 0, 0.2, 1);
-  --fast:    150ms var(--ease);
-  --base:    300ms var(--ease);
-  --slow:    600ms var(--ease);
+  --ease:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --fast:     150ms var(--ease);
+  --base:     300ms var(--ease);
+  --slow:     600ms var(--ease);
 
   --r-sm: 8px;
   --r-md: 16px;
   --r-lg: 24px;
-  --r-xl: 40px;
+  --r-xl: 36px;
 }
 
 /* ── RESET ── */
@@ -54,13 +54,13 @@ body {
   -webkit-font-smoothing: antialiased;
   cursor: none;
 }
-::selection { background: rgba(147,51,234,0.3); color: var(--primary-lt); }
-::-webkit-scrollbar { width: 4px; }
+::selection { background: rgba(147,51,234,0.35); color: var(--primary-lt); }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 3px; }
 
 /* ── LAYOUT ── */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
 section { padding: 120px 0; position: relative; }
 
 /* ── SECTION TITLE ── */
@@ -69,7 +69,7 @@ section { padding: 120px 0; position: relative; }
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--secondary);
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -84,15 +84,15 @@ section { padding: 120px 0; position: relative; }
 
 .section-title-main {
   font-family: var(--font-head);
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
   font-weight: 800;
   color: var(--text);
-  letter-spacing: -0.02em;
-  margin-bottom: 60px;
-  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 56px;
+  line-height: 1.25;
 }
 
-.section-title-main span { color: var(--primary-lt); }
+.section-title-main span { color: var(--primary-lt); text-shadow: 0 0 20px rgba(168,85,247,0.4); }
 
 /* ── GLASS CARD ── */
 .glass {
@@ -111,7 +111,7 @@ section { padding: 120px 0; position: relative; }
 /* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
-  padding: 13px 30px;
+  padding: 14px 32px;
   font-family: var(--font-head);
   font-size: 0.85rem;
   font-weight: 700;
@@ -127,9 +127,9 @@ section { padding: 120px 0; position: relative; }
 .btn-fill {
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   color: #fff;
-  box-shadow: 0 4px 20px rgba(147,51,234,0.4);
+  box-shadow: 0 4px 24px rgba(147,51,234,0.4);
 }
-.btn-fill:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(147,51,234,0.5); }
+.btn-fill:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(147,51,234,0.6); }
 .btn-outline {
   background: transparent;
   color: var(--primary-lt);
@@ -170,7 +170,7 @@ section { padding: 120px 0; position: relative; }
   padding: 4px 12px;
   border-radius: 100px;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 500;
   background: rgba(147,51,234,0.1);
   color: var(--primary-lt);

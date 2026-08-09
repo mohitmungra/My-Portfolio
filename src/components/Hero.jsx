@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Icosahedron, MeshDistortMaterial, Ring } from '@react-three/drei';
-import * as THREE from 'three';
 import './Hero.css';
 
 /* ── Custom Cursor ── */
@@ -17,11 +16,11 @@ function CustomCursor() {
 
     let raf;
     const tick = () => {
-      ring_pos.current.x += (pos.current.x - ring_pos.current.x) * 0.12;
-      ring_pos.current.y += (pos.current.y - ring_pos.current.y) * 0.12;
+      ring_pos.current.x += (pos.current.x - ring_pos.current.x) * 0.14;
+      ring_pos.current.y += (pos.current.y - ring_pos.current.y) * 0.14;
       if (dot.current) {
-        dot.current.style.left  = pos.current.x + 'px';
-        dot.current.style.top   = pos.current.y + 'px';
+        dot.current.style.left = pos.current.x + 'px';
+        dot.current.style.top  = pos.current.y + 'px';
       }
       if (ring.current) {
         ring.current.style.left = ring_pos.current.x + 'px';
@@ -33,7 +32,7 @@ function CustomCursor() {
 
     const hover = () => ring.current?.classList.add('hovering');
     const unhover = () => ring.current?.classList.remove('hovering');
-    document.querySelectorAll('a,button,.btn').forEach(el => {
+    document.querySelectorAll('a,button,.btn,.flip-outer').forEach(el => {
       el.addEventListener('mouseenter', hover);
       el.addEventListener('mouseleave', unhover);
     });
@@ -72,10 +71,10 @@ function DistortSphere() {
         color={hovered ? '#f97316' : '#9333ea'}
         emissive={hovered ? '#f97316' : '#7c3aed'}
         emissiveIntensity={0.4}
-        distort={0.4}
+        distort={0.35}
         speed={3}
-        roughness={0}
-        metalness={0.1}
+        roughness={0.1}
+        metalness={0.2}
         wireframe={false}
       />
     </Icosahedron>
@@ -203,13 +202,12 @@ export default function Hero() {
             {/* Badge */}
             <div className="hero-badge">
               <span className="badge-pulse" />
-              MosChip Technologies · Ahmedabad
+              MosChip Technologies · Digital Engineer
             </div>
 
             {/* Name */}
             <div className="hero-name-wrap">
-              <h1 className="hero-name" data-text="MOHIT">MOHIT</h1>
-              <h1 className="hero-name name-2" data-text="MUNGRA">MUNGRA</h1>
+              <h1 className="hero-name" data-text="MOHIT MUNGRA">MOHIT MUNGRA</h1>
             </div>
 
             {/* Role */}
@@ -220,7 +218,7 @@ export default function Hero() {
             </div>
 
             <p className="hero-desc">
-              Building intelligent systems at the intersection of embedded hardware, IoT protocols, and AI evaluation. 1+ year transforming complex test challenges into automated precision.
+              Specializing in embedded systems, IoT platforms, AI evaluation frameworks, and protocol-based testing across embedded, mobile, and backend systems.
             </p>
 
             {/* Stats */}
