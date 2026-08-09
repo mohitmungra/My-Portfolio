@@ -1,0 +1,299 @@
+/* ============================================================
+   FUTURISTIC 3D PORTFOLIO — GLOBAL DESIGN SYSTEM
+   Mohit Mungra | Digital Engineer
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+/* ── CSS CUSTOM PROPERTIES ── */
+:root {
+  --primary:        #00f0ff;
+  --secondary:      #7b2fff;
+  --accent:         #ff006e;
+  --accent2:        #00ff88;
+  --bg-deep:        #020010;
+  --bg-surface:     #050018;
+  --bg-card:        rgba(255, 255, 255, 0.035);
+  --bg-card-hover:  rgba(255, 255, 255, 0.07);
+  --border-subtle:  rgba(0, 240, 255, 0.12);
+  --border-glow:    rgba(0, 240, 255, 0.4);
+  --text-main:      #e2e8f0;
+  --text-muted:     #64748b;
+  --text-dim:       #334155;
+
+  --font-display:   'Orbitron', monospace;
+  --font-body:      'Space Grotesk', sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+
+  --glow-cyan:      0 0 20px rgba(0, 240, 255, 0.4), 0 0 60px rgba(0, 240, 255, 0.15);
+  --glow-violet:    0 0 20px rgba(123, 47, 255, 0.4), 0 0 60px rgba(123, 47, 255, 0.15);
+  --glow-pink:      0 0 20px rgba(255, 0, 110, 0.4), 0 0 60px rgba(255, 0, 110, 0.15);
+
+  --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base:   300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:   600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(0, 240, 255, 0.25);
+  color: var(--primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  border-radius: 3px;
+}
+
+/* ── LAYOUT UTILITIES ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 120px 0;
+  position: relative;
+}
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; }
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-main);
+  letter-spacing: 0.05em;
+}
+
+.title-number {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--primary);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-glow), transparent);
+  max-width: 200px;
+}
+
+/* ── GLASSMORPHISM CARD ── */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-base);
+}
+
+.glass-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ── NEON BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.btn:hover::before { transform: translateX(100%); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #000;
+  box-shadow: 0 4px 24px rgba(0, 240, 255, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 40px rgba(0, 240, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-2px);
+}
+
+/* ── TECH / SKILL BADGES ── */
+.tech-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: rgba(0, 240, 255, 0.08);
+  color: var(--primary);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  transition: var(--transition-fast);
+}
+
+.tech-badge:hover {
+  background: rgba(0, 240, 255, 0.18);
+  border-color: var(--primary);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+/* ── GLITCH ANIMATION ── */
+@keyframes glitch {
+  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-2px, -2px); }
+  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(1px, 2px); }
+  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(-1px, -2px); }
+  60%  { clip-path: inset(25% 0 58% 0); transform: translate(2px, 1px); }
+  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-2px, 1px); }
+  100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, -1px); }
+}
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes rotate-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CANVAS BACKGROUND ── */
+#bg-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── PAGE OVERLAY GRID ── */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── SECTION CONTENT z-layer ── */
+.section-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  section { padding: 80px 0; }
+  .section-title { font-size: 1.5rem; }
+}
