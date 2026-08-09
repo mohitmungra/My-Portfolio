@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import './About.css';
 
 const highlights = [
@@ -7,7 +8,27 @@ const highlights = [
   { icon: '☁',  title: 'Cloud & IoT',      desc: 'Azure IoT Hub, AWS, OPC UA, industrial data pipelines' },
 ];
 
+const DYNAMIC_SKILL_GROUPS = [
+  { pos1: 'ESP32',       pos2: 'Raspberry Pi', pos3: 'DeepEval' },
+  { pos1: 'OCPP',        pos2: 'MQTT',         pos3: 'Modbus' },
+  { pos1: 'Pytest',      pos2: 'Selenium',     pos3: 'Appium' },
+  { pos1: 'DDR RAM',     pos2: 'I2C / SPI',    pos3: 'CAN Bus' },
+  { pos1: 'Azure IoT',   pos2: 'Docker',       pos3: 'GitLab CI' },
+  { pos1: 'Matter',      pos2: 'FastAPI',      pos3: 'LLM Testing' },
+];
+
 export default function About() {
+  const [groupIndex, setGroupIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setGroupIndex(prev => (prev + 1) % DYNAMIC_SKILL_GROUPS.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentGroup = DYNAMIC_SKILL_GROUPS[groupIndex];
+
   return (
     <section id="about" className="about">
       <div className="container">
@@ -20,14 +41,23 @@ export default function About() {
               <div className="hex-orbit o1"><div className="orbit-dot od-p" /></div>
               <div className="hex-orbit o2"><div className="orbit-dot od-o" /></div>
               <div className="hex-orbit o3"><div className="orbit-dot od-c" /></div>
+
               {/* Profile */}
               <div className="profile-circle">
                 <img src="/MM.jpeg" alt="Mohit Mungra" />
                 <div className="profile-overlay" />
               </div>
-              {/* Corner labels */}
-              <div className="corner-tag tag-tl">ESP32</div>
-              <div className="corner-tag tag-br">DeepEval</div>
+
+              {/* Dynamically Changing Floating Skill Tags */}
+              <div key={`tag-tl-${groupIndex}`} className="corner-tag tag-tl">
+                {currentGroup.pos1}
+              </div>
+              <div key={`tag-tr-${groupIndex}`} className="corner-tag tag-tr">
+                {currentGroup.pos2}
+              </div>
+              <div key={`tag-br-${groupIndex}`} className="corner-tag tag-br">
+                {currentGroup.pos3}
+              </div>
             </div>
           </div>
 

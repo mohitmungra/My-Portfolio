@@ -7,8 +7,8 @@ const projects = [
     title: 'BSP Validation',
     subtitle: 'DDR RAM & Protocol Testing',
     color: '#9333ea',
-    desc: 'Board Support Package validation on Raspberry Pi — 21 DDR RAM test cases covering pattern, address, bandwidth, stress testing & rowhammer vulnerability. Protocol validation: I2C, SPI, EEPROM.',
-    tech: ['Python', 'Pytest', 'Raspberry Pi', 'I2C/SPI', 'EEPROM'],
+    desc: 'Board Support Package validation on Raspberry Pi — 21 DDR RAM test cases covering pattern, address, bandwidth, stress testing & rowhammer vulnerability. Protocol validation: I2C, SPI.',
+    tech: ['Python', 'Pytest', 'Raspberry Pi', 'I2C/SPI'],
     features: ['21 DDR RAM test cases (pattern & stress)', 'Rowhammer vulnerability testing', 'Peripheral protocol validation']
   },
   {
@@ -91,7 +91,7 @@ const projects = [
     desc: 'AI-powered e-commerce validation with face recognition and emotion detection on Qualcomm edge hardware.',
     tech: ['Android', 'AI/ML', 'Edge Computing', 'Qualcomm'],
     features: ['Face recognition validation', 'Edge case testing', 'Hardware integration testing']
-  },
+  }
 ];
 
 function FlipCard({ project }) {
@@ -146,9 +146,8 @@ function FlipCard({ project }) {
                 <span key={t} className="flip-badge" style={{ color: project.color, borderColor: project.color + '40', background: project.color + '10' }}>{t}</span>
               ))}
             </div>
-            <div className="flip-hint" style={{ color: project.color }}>
-              <span>Click to view details</span>
-              <span className="flip-icon-spin">↻</span>
+            <div className="flip-symbol" style={{ color: project.color, borderColor: project.color + '40', background: project.color + '15' }} title="Flip card">
+              ↻
             </div>
           </div>
         </div>
@@ -179,9 +178,8 @@ function FlipCard({ project }) {
                 <span key={t} className="flip-badge" style={{ color: project.color, borderColor: project.color + '40', background: project.color + '10' }}>{t}</span>
               ))}
             </div>
-            <div className="flip-hint" style={{ color: project.color }}>
-              <span>Click to flip back</span>
-              <span className="flip-icon-spin">↺</span>
+            <div className="flip-symbol" style={{ color: project.color, borderColor: project.color + '40', background: project.color + '15' }} title="Flip back">
+              ↺
             </div>
           </div>
         </div>
@@ -196,7 +194,6 @@ export default function Projects() {
       <div className="container">
         <div className="section-label">04. PROJECTS</div>
         <h2 className="section-title-main">Featured <span>Work</span></h2>
-        <p className="projects-sub">Click any card to flip and explore implementation details</p>
         <div className="projects-grid">
           {projects.map(p => <FlipCard key={p.title} project={p} />)}
         </div>
